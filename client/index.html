@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="vertical-center">
+  <head>
+    <title>Qr code creator/scanner</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/qrcode.js"></script>
+    <script type="text/javascript" src="js/recorder.js"></script>
+    <script type="text/javascript" src="js/service.js"></script>
+    <link rel="manifest" href="manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="images/icons/icon-72x72.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-96x96.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-128x128.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-144x144.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-384x384.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-512x512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+    <meta name="theme-color" content="#db4938" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="container fluid">
+    <div class="content">
+      <u><h1 class="test2">Product Qr-code creator</h1></u>
+      <form onsubmit="generate();return false;">
+        <input style="width: 100%" type="text" id="qr" name="" />
+      </form>
+      <br />
+      <div
+        id="qrResult"
+        style="height: 200px; width: 200px; margin: auto"
+      ></div>
+      <script type="text/javascript">
+        var qrcode = new QRCode(document.getElementById("qrResult"), {
+          width: 200,
+          height: 200,
+          image_format: "jpeg",
+          jpeg_quality: 90,
+        });
+
+        function generate() {
+          console.log(qrcode);
+          var message = document.getElementById("qr");
+          if (!message.value) {
+            alert("Input a text");
+            message.focus();
+            return;
+          }
+          qrcode.makeCode(message.value);
+        }
+
+        function generate2() {
+          var message = document.getElementById("output");
+          if (!message.value) {
+            alert("no input");
+            message.focus();
+            return;
+          }
+          qrcode.makeCode(message.value);
+        }
+      </script>
+      <br />
+      <img id="image" />
+      <hr />
+      <h1 class="text-center">Lees Qr bestand</h1>
+      <input
+        accept="image/*"
+        type="file"
+        id="file"
+        name="file"
+        class="bestand"
+      />
+      <br />
+      <br />
+      <p>Qr Content: <span id="content"></span></p>
+      <hr />
+      <div class="container fluid">
+        <h1 class="text-center mt-2">speech to text</h1>
+        <p>Speak to create a product to add to a Qr-code</p>
+        <div class="form-group">
+          <p>
+            <button type="button" onclick="runSpeechRecognition()">
+              Speech to Text
+            </button>
+            &nbsp; <span id="action"></span>
+          </p>
+          <textarea id="output" rows="1" class="hide"></textarea>
+          <textarea id="output2" rows="1" class="hide"></textarea>
+          <p id="instructions">Press the button to start recording</p>
+          <button
+            id="qrbtn2"
+            onclick="generate2()"
+            class="btn btn-warning btn-block"
+          >
+            Create Qr
+          </button>
+        </div>
+      </div>
+      <hr />
+      <br />
+      <h1 class="text-center">Printen</h1>
+      <div class="printer">
+        <button class="btn btn-success btn-block" id="btnGrantPermission">
+          Geef toestemming voor notificaties.
+        </button>
+        <button class="btn btn-success btn-block" id="btnSubscribeToPushNotification">
+          Voeg toestel toe aan geregisteerde apparaten.
+        </button>
+
+        <button id="btnGrantPermission" class="btn btn-danger btn-block">
+          Maak connectie met de printer
+        </button>
+        <button id="btnShowNotification" class="btn btn-danger btn-block">
+          Print Qr code</button
+        ><br />
+      </div>
+    </div>
+    <br />
+    <div class="list content">
+      <u><h1 class="test2">Last printed Qr's</h1></u>
+      <p>still in production</p>
+    </div>
+  </body>
+  <script type="text/javascript" src="js/qrReader.js"></script>
+</html>
